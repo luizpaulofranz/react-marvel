@@ -30,3 +30,8 @@
 .card > .card-body > .hero-content > .card-title {
     color: white
 }
+
+.card a {
+    text-decoration: none;
+    color: white
+}
