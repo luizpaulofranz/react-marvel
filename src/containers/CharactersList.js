@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Card from '../components/Card';
 
 import md5 from "blueimp-md5";
+import HeroCard from '../components/card/HeroCard';
 
 class CharactersList extends React.Component {
 
@@ -52,7 +52,7 @@ class CharactersList extends React.Component {
         return (
             <div>
                 { this.state.heros.results.map( hero => (
-                    <Card />
+                    <HeroCard key={hero.id} hero={hero} />
                 )) }
             </div>
         )
