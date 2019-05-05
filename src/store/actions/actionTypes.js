@@ -1,0 +1,2 @@
+export const SET_HEROES = 'SET_HEROES';
+export const FETCH_HEROES_FAILD = 'FETCH_HEROES_FAILD';
