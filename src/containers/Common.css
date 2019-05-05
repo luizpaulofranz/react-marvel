@@ -1,0 +1,12 @@
+.hero-image-container {
+    width: 100%;
+}
+
+.hero-image-container img{
+    margin: 0 auto;
+    display: block
+}
+
+.link-back{
+    margin: 5px;
+}

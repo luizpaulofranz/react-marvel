@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import CharactersList from './containers/CharactersList';
 import Detail from './containers/detail/Detail';
+import HeroForm from './containers/form/HeroForm';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   const Routes = (
     <Switch>
       <Route path="/" exact component={CharactersList} />
-      {/*<Route path="/charactere/edit/:_id" component={EditRecipe} />*/}
+      <Route path="/edit/:_id" component={HeroForm} />
       <Route path="/detail/:_id" component={Detail} />
       <Redirect to="/" />
     </Switch>

@@ -1,15 +1,13 @@
 import React, { Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { Form, Button, Image, Table, Row, Col } from 'react-bootstrap';
 
 import axios from 'axios';
 import md5 from "blueimp-md5";
 
-import { Row, Image, Jumbotron, Button, Table } from 'react-bootstrap';
-
-import './Detail.css';
 import '../Common.css';
 
-class Detail extends React.Component {
+class HeroForm extends React.Component {
 
     state = {
         error: null,
@@ -66,42 +64,60 @@ class Detail extends React.Component {
         if(this.state.error) return (<div>{Ret}<br/>Error</div>);
         if(!this.state.isLoaded) return (<div>{Ret}<br/>Loading</div>);
 
+        
         return (
-        <Fragment>
-        {Ret}
-
-        <Row className="detail">
+        <Form>
+            {Ret}
 
             <div className="hero-image-container" >
                 <Image src={this.state.hero.thumbnail.path+'.'+this.state.hero.thumbnail.extension} />
             </div>
-            <Jumbotron style={{width: "100%"}}>
-                <h1>{this.state.hero.name}</h1>
-                { this.state.hero.description != "" ? <p>{this.state.hero.description}</p> : ""}
+            <Form.Group controlId="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control name="name" placeholder="My Name" />
+            </Form.Group>
 
-                <Button variant="primary" onClick={this.editClick} >Edit</Button>
-                <h2>Series List:</h2>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.hero.series.items.map( (comic, index) => (
-                        <tr key={index}>
-                            <td>{index}</td>
-                            <td>{comic.name}</td>
-                        </tr>
-                        ) )}
-                    </tbody>
-                </Table>
-            </Jumbotron>
-        </Row>
-        </Fragment>
-        );
+            <Form.Group controlId="imageUrl">
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control name="imageUrl" placeholder="http://www.example/uploads/my_image.jpg" />
+                <Form.Text className="text-muted">
+                You must provide a hosted image.
+                </Form.Text>
+            </Form.Group>
+
+            <h2>Series List:</h2>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.hero.series.items.map( (comic, index) => (
+                    <tr key={index}>
+                        <td>{index}</td>
+                        <td>{comic.name}</td>
+                    </tr>
+                    ) )}
+                </tbody>
+            </Table>
+
+            <Form.Group as={Row} controlId="formHorizontalEmail">
+                <Form.Label column sm={1} style={{textAlign: "right"}}>Add Serie</Form.Label>
+                <Col sm={10}>
+                    <Form.Control type="email" placeholder="Avengers: The Initiative (2007 - 2010)" />
+                </Col>
+                <Col sm={1}>
+                    <Button variant="primary">Add</Button>
+                </Col>
+            </Form.Group>
+
+            <Button variant="success" type="submit">
+                Save
+            </Button>
+        </Form>)
     }
 }
 
-export default withRouter(Detail);
+export default withRouter(HeroForm);
