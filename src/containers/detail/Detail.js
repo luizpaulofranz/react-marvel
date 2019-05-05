@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import axios from 'axios';
 import md5 from "blueimp-md5";
@@ -61,7 +61,7 @@ class Detail extends React.Component {
 
     render() {
         { /* Link back in all returns */}
-        const Ret = <Link onClick={this.backClick} className="btn btn-primary link-back">Voltar</Link>;
+        const Ret = <Button onClick={this.backClick} className="btn btn-primary link-back">Voltar</Button>;
 
         if(this.state.error) return (<div>{Ret}<br/>Error</div>);
         if(!this.state.isLoaded) return (<div>{Ret}<br/>Loading</div>);

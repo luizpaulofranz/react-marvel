@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Form, Button, Image, Table, Row, Col } from 'react-bootstrap';
 
 import axios from 'axios';
@@ -59,7 +59,7 @@ class HeroForm extends React.Component {
 
     render() {
         { /* Link back in all returns */}
-        const Ret = <Link onClick={this.backClick} className="btn btn-primary link-back">Voltar</Link>;
+        const Ret = <Button onClick={this.backClick} className="btn btn-primary link-back">Voltar</Button>;
 
         if(this.state.error) return (<div>{Ret}<br/>Error</div>);
         if(!this.state.isLoaded) return (<div>{Ret}<br/>Loading</div>);
@@ -74,13 +74,13 @@ class HeroForm extends React.Component {
             </div>
             <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
-                <Form.Control name="name" placeholder="My Name" />
+                <Form.Control name="name" placeholder="My Name" value={this.state.hero.name} />
             </Form.Group>
 
             <Form.Group controlId="imageUrl">
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control name="imageUrl" placeholder="http://www.example/uploads/my_image.jpg" />
-                <Form.Text className="text-muted">
+                <Form.Control name="imageUrl" placeholder="http://www.example/uploads/my_image.jpg" value={`${this.state.hero.thumbnail.path}.${this.state.hero.thumbnail.extension}`} />
+                <Form.Text>
                 You must provide a hosted image.
                 </Form.Text>
             </Form.Group>
@@ -103,10 +103,10 @@ class HeroForm extends React.Component {
                 </tbody>
             </Table>
 
-            <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Group as={Row} controlId="serie">
                 <Form.Label column sm={1} style={{textAlign: "right"}}>Add Serie</Form.Label>
                 <Col sm={10}>
-                    <Form.Control type="email" placeholder="Avengers: The Initiative (2007 - 2010)" />
+                    <Form.Control name="serie" placeholder="Avengers: The Initiative (2007 - 2010)" />
                 </Col>
                 <Col sm={1}>
                     <Button variant="primary">Add</Button>
