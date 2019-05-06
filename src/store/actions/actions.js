@@ -24,6 +24,13 @@ export const getHero = (_id) => {
     }
 }
 
+export const editHero = ( hero ) => {
+    return {
+        type: actionTypes.EDIT_HERO,
+        hero
+    }
+};
+
 // handle the async codes
 export const initState = () => {
     

@@ -10,8 +10,33 @@ import './HeroForm.css';
 
 class HeroForm extends React.Component {
 
+    state = {
+        id: this.props.match.params._id,
+        name: "",
+        imageUrl: ""
+    }
+
+    inputChange = (event, field) => {
+        let curState = this.state;
+        curState[field] = event.target.value;
+        this.setState(curState);
+    }
+
     backClick = () => {
         this.props.history.goBack()
+    }
+
+    saveClick = () => {
+        this.props.editHero(this.state);
+    }
+
+    // here we populate our state with redux props
+    componentWillReceiveProps(nextProps){
+        console.log("aaa");
+        if ( !this.props.hero && nextProps.hero ) {
+            const url = `${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`;
+            this.setState({ name: nextProps.hero.name, imageUrl: url })
+        }
     }
 
     componentDidMount() {
@@ -36,18 +61,28 @@ class HeroForm extends React.Component {
             </div>
             <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
-                <Form.Control name="name" placeholder="My Name" defaultValue={this.props.hero.name} />
+                <Form.Control 
+                    name="name" 
+                    placeholder="My Name" 
+                    value={(this.state.name) ? this.state.name : this.props.hero.name} 
+                    onChange={(event) => this.inputChange(event, 'name')} 
+                />
             </Form.Group>
 
             <Form.Group controlId="imageUrl">
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control name="imageUrl" placeholder="http://www.example/uploads/my_image.jpg" defaultValue={`${this.props.hero.thumbnail.path}.${this.props.hero.thumbnail.extension}`} />
+                <Form.Control 
+                    name="imageUrl" 
+                    placeholder="http://www.example/uploads/my_image.jpg" 
+                    value={(this.state.imageUrl) ? this.state.imageUrl : `${this.props.hero.thumbnail.path}.${this.props.hero.thumbnail.extension}`}
+                    onChange={(event) => this.inputChange(event, 'imageUrl')} 
+                />
                 <Form.Text>
                 You must provide a hosted image.
                 </Form.Text>
             </Form.Group>
 
-            <Button variant="success" type="submit">
+            <Button variant="success" onClick={this.saveClick}>
                 Save
             </Button>
         </Form>)
@@ -63,7 +98,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getCurrentHero: (_id) => dispatch(actions.getHero(_id))
+        getCurrentHero: (_id) => dispatch(actions.getHero(_id)),
+        editHero: (hero) => dispatch(actions.editHero(hero))
     };
 }
 

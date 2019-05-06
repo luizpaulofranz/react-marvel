@@ -33,6 +33,23 @@ const reducer = ( state = initialState, action ) => {
                 })
             };
 
+        case actionTypes.EDIT_HERO:
+            const index = state.heroes.findIndex( myHero => {
+                if (myHero.id == action.hero.id)
+                    return myHero;
+            });
+            let currenHeroes = [...state.heroes];
+            currenHeroes[index].name = action.hero.name;
+            
+            const ext = action.hero.imageUrl.substr(action.hero.imageUrl.length -3);
+
+            currenHeroes[index].thumbnail.path = action.hero.imageUrl.replace('.'+ext, '');
+            currenHeroes[index].thumbnail.extension = ext;
+            return {
+                ...state,
+                heroes: currenHeroes
+            };
+
         default:
             return state;       
     }
