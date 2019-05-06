@@ -3,14 +3,16 @@ import * as actionTypes from './actions/actionTypes';
 const initialState = {
     error: null,
     isLoaded: false,
-    heroes: []
+    heroes: [],
+    currentHero: null
 };
 
 const reducer = ( state = initialState, action ) => {
+
     switch ( action.type ) {
         case actionTypes.SET_HEROES:
-            console.log("reducer", action);
             return {
+                ...state,
                 error: null,
                 isLoaded: true,
                 heroes: action.heroes
@@ -21,10 +23,19 @@ const reducer = ( state = initialState, action ) => {
                 ...initialState,
                 error: true
             };
+
+        case actionTypes.GET_HERO:
+            return {
+                ...state,
+                currentHero: state.heroes.find( myHero => {
+                    if (myHero.id == action._id)
+                        return myHero;
+                })
+            };
+
         default:
-            return state;
+            return state;       
     }
-    return state;
 };
 
 export default reducer;

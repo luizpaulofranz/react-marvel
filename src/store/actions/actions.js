@@ -17,6 +17,13 @@ export const fetchHeroesFailed = () => {
     };
 }
 
+export const getHero = (_id) => {
+    return {
+        type: actionTypes.GET_HERO,
+        _id
+    }
+}
+
 // handle the async codes
 export const initState = () => {
     

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Row, Form, Col, Button } from 'react-bootstrap';
 
 const Search = (prosp) => {

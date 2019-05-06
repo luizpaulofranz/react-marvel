@@ -6,17 +6,16 @@ import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import reducer from './store/reducer';
-
+import store from './store/store';
 // creating our redux global state object
-const store = createStore(
+/*const store = createStore(
     reducer, // we have to pass only one reducer
     // thunk is for handle async codes in actions
     applyMiddleware(thunk)
-);
+);*/
+
+
 
 ReactDOM.render(
     <Provider store={store}>
