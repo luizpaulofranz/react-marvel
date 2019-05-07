@@ -4,11 +4,12 @@ const initialState = {
     error: null,
     isLoaded: false,
     heroes: [],
-    displayedHeroes: [],
     currentHero: null
 };
 
 const reducer = ( state = initialState, action ) => {
+    // testing puposes
+    let heroesList;
 
     switch ( action.type ) {
         case actionTypes.SET_HEROES:
@@ -26,17 +27,28 @@ const reducer = ( state = initialState, action ) => {
             };
 
         case actionTypes.GET_HERO:
+            // for testing purposes
+            heroesList = state.heroes;
+            if (action.heroes) {
+                heroesList = action.heroes;
+            }
             return {
                 ...state,
-                currentHero: state.heroes.find( myHero => {
+                heroes: heroesList,
+                currentHero: heroesList.find( myHero => {
                     if (myHero.id == action._id)
                         return myHero;
                 })
             };
 
         case actionTypes.SEARCH_HERO:
+            // for testing purposes
+            heroesList = state.heroes;
+            if (action.heroes) {
+                heroesList = action.heroes;
+            }
             const term = action.term.toLowerCase();
-            const filteredHeroes = state.heroes.filter( myHero => {
+            const filteredHeroes = heroesList.filter( myHero => {
                 if (myHero.name.toLowerCase().includes(term)) {
                     return myHero;
                 }
@@ -48,11 +60,16 @@ const reducer = ( state = initialState, action ) => {
             };
 
         case actionTypes.EDIT_HERO:
-            const index = state.heroes.findIndex( myHero => {
+            // for testing purposes
+            heroesList = state.heroes;
+            if (action.heroes) {
+                heroesList = action.heroes;
+            }
+            const index = heroesList.findIndex( myHero => {
                 if (myHero.id == action.hero.id)
                     return myHero;
             });
-            let currenHeroes = [...state.heroes];
+            let currenHeroes = [...heroesList];
             currenHeroes[index].name = action.hero.name;
             
             const ext = action.hero.imageUrl.substr(action.hero.imageUrl.length -3);
