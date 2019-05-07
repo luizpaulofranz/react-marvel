@@ -17,7 +17,7 @@ const HeroCard = (props) => {
           <Card.Title>
             <Link to={`/detail/${hero.id}`}>{hero.name}</Link>
           </Card.Title>
-          <Link to={`/edit/${props.hero.id}`} className="btn btn-primary">Edit</Link>
+          <Link to={`/edit/${hero.id}`} className="btn btn-primary">Edit</Link>
         </div>
       </Card.Body>
     </Card>
