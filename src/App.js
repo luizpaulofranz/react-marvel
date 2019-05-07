@@ -10,7 +10,7 @@ import * as actions from './store/actions/actions';
 import CharactersList from './components/CharactersList';
 import Detail from './containers/detail/Detail';
 import HeroForm from './containers/form/HeroForm';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 
 const Routes = (
   <Switch>

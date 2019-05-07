@@ -16,9 +16,23 @@ class HeroForm extends React.Component {
         imageUrl: ""
     }
 
+    // todos esses controles por que com o getDerivedStateFromProps
+    // ao alterarmos uma prop, automaticamente alteramos o estado
     inputChange = (event, field) => {
         let curState = this.state;
-        curState[field] = event.target.value;
+        if (field === 'imageUrl') {
+            const img = event.target.value;
+            const ext = img.substr(img.length -3);
+            const path = img.replace('.'+ext, '');
+            if (ext === 'jpg' || ext === 'png') {
+                this.props.hero.thumbnail.path = path;
+                this.props.hero.thumbnail.extension = ext;
+                curState[field] = `${path}.${ext}`;
+            }
+        } else {
+            this.props.hero[field] = event.target.value;
+        }
+        console.log(curState);
         this.setState(curState);
     }
 
@@ -31,13 +45,14 @@ class HeroForm extends React.Component {
     }
 
     // here we populate our state with redux props
-    componentWillReceiveProps(nextProps){
-        console.log("aaa");
-        if ( !this.props.hero && nextProps.hero ) {
-            const url = `${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`;
-            this.setState({ name: nextProps.hero.name, imageUrl: url })
+    static getDerivedStateFromProps(nextProps, prevState){
+        if (!nextProps.hero) {
+            return null;
         }
-    }
+        if ((nextProps.hero.name!==prevState.name) || (`${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`!==prevState.imageUrl)) {
+          return { name: nextProps.hero.name, imageUrl: `${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`};
+        } else return null;
+     }
 
     componentDidMount() {
         const { _id } = this.props.match.params; // to get the URL params
@@ -81,10 +96,11 @@ class HeroForm extends React.Component {
                 You must provide a hosted image.
                 </Form.Text>
             </Form.Group>
-
+            {/* 
             <Button variant="success" onClick={this.saveClick}>
                 Save
             </Button>
+            */}
         </Form>)
     }
 }

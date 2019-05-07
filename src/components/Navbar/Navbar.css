@@ -15,7 +15,7 @@ nav {
   
   p,
   li {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
   
   ul {
@@ -43,3 +43,29 @@ nav {
   #searchForm{
       width: 100%
   }
+
+  #home {
+    width: 33.33%;
+    margin-top: -15px
+  }
+
+  #form {
+    width: 66.66%;
+  }  
+
+@media screen and (max-width: 411px) {
+    #home {
+      width: 23.33%;
+    }
+
+    nav a,
+    nav a:link {
+      font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 370px) {
+  #form {
+    margin-left: 10px
+  }
+}

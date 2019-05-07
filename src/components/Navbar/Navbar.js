@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import Search from './Search';
+import Search from '../../containers/Search';
 
 import './Navbar.css';
 
 const Navbar = () => (
     <nav>
         <ul>
-            <li style={{width: "33.33%"}}><NavLink to="/" exact>Home</NavLink></li>
-            <li style={{width: "66.66%"}}><Search /></li>
+            <li id="home"><NavLink to="/" exact>Home</NavLink></li>
+            <li id="form"><Search /></li>
         </ul>
     </nav>
 );

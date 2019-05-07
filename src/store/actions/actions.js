@@ -31,6 +31,13 @@ export const editHero = ( hero ) => {
     }
 };
 
+export const searchHero = ( term ) => {
+    return {
+        type: actionTypes.SEARCH_HERO,
+        term: term.term
+    }
+}
+
 // handle the async codes
 export const initState = () => {
     
