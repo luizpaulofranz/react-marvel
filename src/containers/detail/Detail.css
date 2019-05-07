@@ -1,0 +1,15 @@
+.detail h1 {
+    font-weight: bold;
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.detail h2 {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 10px 0 10px 0;
+}
+
+.detail table th {
+    font-weight: bold
+}
