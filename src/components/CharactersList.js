@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import HeroCard from './card/HeroCard';
 
-const CharactersList = (props) => {
+export const CharactersList = (props) => {
 
     if(props.error) return <div>Error</div>
     if(!props.isLoaded) return <div>Loading</div>

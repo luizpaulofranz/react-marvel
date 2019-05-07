@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
 
 import './HeroCard.css';
 
@@ -24,4 +23,4 @@ const HeroCard = (props) => {
   );
 }
 
-export default withRouter(HeroCard);
+export default HeroCard;
