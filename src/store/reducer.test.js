@@ -36,7 +36,7 @@ describe('Reducer Tests', () => {
 
     /** ## test get hero ## */
     it('should return the hero by id', () => {
-        expect(reducer(undefined, {type: actionTypes.GET_HERO, heroes: mock, _id: "1011334"})).toEqual(
+        expect(reducer( {...initialState, heroes: mock}, {type: actionTypes.GET_HERO, _id: "1011334"})).toEqual(
             {
                 error: null,
                 isLoaded: false,
@@ -124,7 +124,7 @@ describe('Reducer Tests', () => {
 
     /** ## test search hero ## */
     it('should return the searched hero', () => {
-        expect(reducer(undefined, {type: actionTypes.SEARCH_HERO, heroes: mock, term: 'bomb'})).toEqual(
+        expect(reducer({...initialState, heroes: mock}, {type: actionTypes.SEARCH_HERO, term: 'bomb'})).toEqual(
             {
                 error: null,
                 isLoaded: false,
@@ -236,7 +236,7 @@ describe('Reducer Tests', () => {
 
     /** ## test edit hero ## */
     it('should return data with edited hero', () => {
-        expect(reducer(undefined, {type: actionTypes.EDIT_HERO, heroes: mock, hero: { id: "1011334", name:'Nome Alterado', imageUrl: "http://urldaimagemalterada.com/imagem.jpg" }})).toEqual(
+        expect(reducer({...initialState, heroes: mock}, {type: actionTypes.EDIT_HERO, hero: { id: "1011334", name:'Nome Alterado', imageUrl: "http://urldaimagemalterada.com/imagem.jpg" }})).toEqual(
             {
                 error: null,
                 isLoaded: false,
@@ -251,6 +251,14 @@ describe('Reducer Tests', () => {
 /* #####################################################  */
 /* ############# JUST OUR MOCKS OBJects ################  */
 /* #####################################################  */
+
+const initialState = {
+    error: null,
+    isLoaded: false,
+    heroes: [],
+    currentHero: null
+};
+
 const mock = [
     {
         "id": 1011334,
