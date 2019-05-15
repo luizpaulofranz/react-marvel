@@ -16,8 +16,14 @@ class HeroForm extends React.Component {
         imageUrl: ""
     }
 
-    // todos esses controles por que com o getDerivedStateFromProps
-    // ao alterarmos uma prop, automaticamente alteramos o estado
+    findCurrentHero = (_id) => {
+        const hero = this.props.heroes.find( myHero => {
+            if (myHero.id == _id)
+                return myHero;
+        });
+        this.setState({name: hero.name, imageUrl: `${hero.thumbnail.path}.${hero.thumbnail.extension}`});
+    }
+
     inputChange = (event, field) => {
         let curState = this.state;
         if (field === 'imageUrl') {
@@ -25,14 +31,11 @@ class HeroForm extends React.Component {
             const ext = img.substr(img.length -3);
             const path = img.replace('.'+ext, '');
             if (ext === 'jpg' || ext === 'png') {
-                this.props.hero.thumbnail.path = path;
-                this.props.hero.thumbnail.extension = ext;
                 curState[field] = `${path}.${ext}`;
             }
         } else {
-            this.props.hero[field] = event.target.value;
+            curState[field] = event.target.value;
         }
-        console.log(curState);
         this.setState(curState);
     }
 
@@ -44,19 +47,10 @@ class HeroForm extends React.Component {
         this.props.editHero(this.state);
     }
 
-    // here we populate our state with redux props
-    static getDerivedStateFromProps(nextProps, prevState){
-        if (!nextProps.hero) {
-            return null;
-        }
-        if ((nextProps.hero.name!==prevState.name) || (`${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`!==prevState.imageUrl)) {
-          return { name: nextProps.hero.name, imageUrl: `${nextProps.hero.thumbnail.path}.${nextProps.hero.thumbnail.extension}`};
-        } else return null;
-     }
-
-    componentDidMount() {
+    componentWillMount() {
         const { _id } = this.props.match.params; // to get the URL params
-        this.props.getCurrentHero(_id);
+        //this.props.getCurrentHero(_id);
+        this.findCurrentHero(_id);
     }
     
     // linkback in all returns
@@ -64,22 +58,21 @@ class HeroForm extends React.Component {
         const Ret = <Button onClick={this.backClick} className="btn btn-primary link-back">Voltar</Button>;
 
         if(this.props.error) return (<div>{Ret}<br/>Error</div>);
-        if(!this.props.hero) return (<div>{Ret}<br/>Loading</div>);
+        if(this.state.name == "") return (<div>{Ret}<br/>Loading</div>);
 
-        
         return (
         <Form id="hero-form">
             {Ret}
 
             <div className="hero-image-container" >
-                <Image src={this.props.hero.thumbnail.path+'.'+this.props.hero.thumbnail.extension} />
+                <Image src={this.state.imageUrl} />
             </div>
             <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control 
                     name="name" 
                     placeholder="My Name" 
-                    value={(this.state.name) ? this.state.name : this.props.hero.name} 
+                    value={this.state.name} 
                     onChange={(event) => this.inputChange(event, 'name')} 
                 />
             </Form.Group>
@@ -89,18 +82,18 @@ class HeroForm extends React.Component {
                 <Form.Control 
                     name="imageUrl" 
                     placeholder="http://www.example/uploads/my_image.jpg" 
-                    value={(this.state.imageUrl) ? this.state.imageUrl : `${this.props.hero.thumbnail.path}.${this.props.hero.thumbnail.extension}`}
+                    value={this.state.imageUrl}
                     onChange={(event) => this.inputChange(event, 'imageUrl')} 
                 />
                 <Form.Text>
                 You must provide a hosted image.
                 </Form.Text>
             </Form.Group>
-            {/* 
+            
             <Button variant="success" onClick={this.saveClick}>
                 Save
             </Button>
-            */}
+            
         </Form>)
     }
 }
@@ -108,13 +101,12 @@ class HeroForm extends React.Component {
 const mapStateToProps = state => {
     return {
         error: state.error,
-        hero: state.currentHero
+        heroes: state.heroes
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        getCurrentHero: (_id) => dispatch(actions.getHero(_id)),
         editHero: (hero) => dispatch(actions.editHero(hero))
     };
 }
