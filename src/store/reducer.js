@@ -33,6 +33,18 @@ const reducer = ( state = initialState, action ) => {
                 })
             };
 
+        case actionTypes.SEARCH_HERO:
+                const term = action.term.toLowerCase();
+                const filteredHeroes = state.heroes.filter( myHero => {
+                    if (myHero.name.toLowerCase().includes(term)) {
+                        return myHero;
+                    }});
+    
+                return {
+                    ...state,
+                    heroes: filteredHeroes
+                };
+
         case actionTypes.EDIT_HERO:
             const index = state.heroes.findIndex( myHero => {
                 if (myHero.id == action.hero.id)
